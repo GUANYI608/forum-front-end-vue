@@ -11,7 +11,7 @@ const routes = [
   {
     path: '/',
     name: 'root',
-    redirect: '/restaurants'  // 導向至該路徑
+    redirect: '/signin'  // 根目錄會直接轉址到餐廳首頁
   },
   {
     path: '/signin',
