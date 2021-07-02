@@ -11,5 +11,11 @@ export default {
       // HTTP Header 攜帶 token
       headers: { Authorization: `Bearer ${getToken()}` }
     })
+  },
+  getFeeds() {
+    return apiHelper.get('/restaurants/feeds', {
+      // HTTP Header 攜帶 token
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
   }
 }
