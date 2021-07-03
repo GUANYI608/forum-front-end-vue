@@ -92,11 +92,11 @@ const routes = [
     name: 'admin-restaurant-edit',
     component: () => import('../views/AdminRestaurantEdit.vue')
   },
-  // {
-  //   path: '/admin/restaurants/:id',
-  //   name: 'admin-restaurant',
-  //   component: () => import('./views/AdminRestaurant.vue')
-  // },
+  {
+    path: '/admin/restaurants/:id',
+    name: 'admin-restaurant',
+    component: () => import('../views/AdminRestaurant.vue')
+  },
   {
     // 使用者權限管理
     path: '/admin/users',

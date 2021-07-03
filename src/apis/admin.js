@@ -10,7 +10,7 @@ export default {
     }
   },
   restaurants: {
-    // 把餐廳的 API 資料帶進表單
+    // 取得單一餐廳的 API 資料
     getDetail({ restaurantId }) {
       return apiHelper.get(`/admin/restaurants/${restaurantId}`, {
         headers: { Authorization: `Bearer ${getToken()}` }
