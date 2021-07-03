@@ -24,6 +24,14 @@ export default {
           Authorization: `Bearer ${getToken()}`
         }
       })
+    },
+    // 刪除餐廳資料
+    delete({ restaurantId }) {
+      return apiHelper.delete(`/admin/restaurants/${restaurantId}`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`
+        }
+      })
     }
   },
 }

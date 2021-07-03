@@ -20,7 +20,13 @@
 
           <a href="#" class="btn btn-link">Edit</a>
 
-          <button type="button" class="btn btn-link">Delete</button>
+          <button
+            type="button"
+            class="btn btn-link"
+            @click.stop.prevent="deleteRestaurant(restaurant.id)"
+          >
+            Delete
+          </button>
         </td>
       </tr>
     </tbody>
@@ -41,6 +47,7 @@ export default {
     this.fetchRestaurants();
   },
   methods: {
+    // 顯示所有餐廳
     async fetchRestaurants() {
       try {
         const { data } = await adminAPI.restaurants.get();
@@ -54,6 +61,12 @@ export default {
           title: "無法取得餐廳，請稍後再試",
         });
       }
+    },
+    // 刪除餐廳
+    deleteRestaurant(restaurantId) {
+      this.restaurants = this.restaurants.filter(
+        (restaurant) => restaurant.id !== restaurantId
+      );
     },
   },
 };
