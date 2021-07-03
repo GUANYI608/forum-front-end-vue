@@ -78,6 +78,9 @@
 </template>
 
 <script>
+import authorizationAPI from "./../apis/authorization";
+import { Toast } from "./../utils/helpers";
+
 export default {
   data() {
     return {
@@ -88,16 +91,57 @@ export default {
     };
   },
   methods: {
-    handleSubmit() {
-      const data = JSON.stringify({
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        passwordCheck: this.passwordCheck,
-      });
+    async handleSubmit() {
+      try {
+        // 判斷一：所有欄位都不能沒有填寫
+        if (
+          !this.name ||
+          !this.email ||
+          !this.password ||
+          !this.passwordCheck
+        ) {
+          Toast.fire({
+            icon: "warning",
+            title: "請確認已填寫所有欄位",
+          });
+          return;
+        }
+        // 判斷二：密碼與確認密碼不相同
+        if (this.password !== this.passwordCheck) {
+          Toast.fire({
+            icon: "warning",
+            title: "兩次輸入的密碼不同",
+          });
+          // 清空 確認密碼 的欄位
+          this.passwordCheck = "";
+          return;
+        }
 
-      // TODO: 向後端驗證使用者登入資訊是否合法
-      console.log("data", data);
+        const { data } = await authorizationAPI.signUp({
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          passwordCheck: this.passwordCheck,
+        });
+
+        if (data.status === "error") {
+          throw new Error(data.message);
+        }
+
+        // 跳出註冊成功提示
+        Toast.fire({
+          icon: "success",
+          title: data.message,
+        });
+
+        // 成功登入後轉址到登入頁
+        this.$router.push("/signin");
+      } catch (error) {
+        Toast.fire({
+          icon: "warning",
+          title: `無法註冊 - ${error.message}`,
+        });
+      }
     },
   },
 };
