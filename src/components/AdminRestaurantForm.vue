@@ -141,6 +141,15 @@ export default {
       isLoading: true,
     };
   },
+  // 透過 Watch 監聽 initialRestaurant 的變化
+  watch: {
+    initialRestaurant(newValue) {
+      this.restaurant = {
+        ...this.restaurant,
+        ...newValue,
+      };
+    },
+  },
   created() {
     this.fetchCategories();
     this.restaurant = {

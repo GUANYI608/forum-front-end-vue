@@ -10,6 +10,12 @@ export default {
     }
   },
   restaurants: {
+    // 把餐廳的 API 資料帶進表單
+    getDetail({ restaurantId }) {
+      return apiHelper.get(`/admin/restaurants/${restaurantId}`, {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      })
+    },
     // 因為是 POST 請求，所以第二個參數是 formData
     // 表單資料被包裝成 FormData 物件
     create({ formData }) {
@@ -32,6 +38,12 @@ export default {
           Authorization: `Bearer ${getToken()}`
         }
       })
-    }
+    },
+
+    update({ restaurantId, formData }) {
+      return apiHelper.put(`/admin/restaurants/${restaurantId}`, formData, {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      })
+    },
   },
 }

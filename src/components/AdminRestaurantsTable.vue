@@ -18,7 +18,15 @@
         <td class="d-flex justify-content-between">
           <a href="#" class="btn btn-link">Show</a>
 
-          <a href="#" class="btn btn-link">Edit</a>
+          <router-link
+            :to="{
+              name: 'admin-restaurant-edit',
+              params: { id: restaurant.id },
+            }"
+            class="btn btn-link"
+          >
+            Edit
+          </router-link>
 
           <button
             type="button"
