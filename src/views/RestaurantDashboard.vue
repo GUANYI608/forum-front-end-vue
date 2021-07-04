@@ -1,5 +1,6 @@
 <template>
-  <div class="container py-5">
+  <Spinner v-if="isLoading" />
+  <div v-else class="container py-5">
     <div>
       <h1>{{ restaurant.name }}</h1>
       <span class="badge badge-secondary mt-1 mb-3">{{
@@ -22,10 +23,14 @@
 
 <script>
 import restaurantsAPI from "./../apis/restaurants";
+import Spinner from "./../components/Spinner";
 import { Toast } from "./../utils/helpers";
 
 export default {
   name: "RestaurantDashboard",
+  components: {
+    Spinner,
+  },
   data() {
     return {
       restaurant: {
@@ -35,6 +40,7 @@ export default {
         commentsLength: 0,
         viewCounts: 0,
       },
+      isLoading: true,
     };
   },
   created() {
@@ -49,6 +55,7 @@ export default {
   methods: {
     async fetchRestaurant(restaurantId) {
       try {
+        this.isLoading = true;
         // 透過 API 請求單一餐廳資料
         const { data } = await restaurantsAPI.getRestaurant({ restaurantId });
 
@@ -69,7 +76,9 @@ export default {
           commentsLength: Comments.length,
           viewCounts,
         };
+        this.isLoading = false;
       } catch (error) {
+        this.isLoading = false;
         console.error(error.message);
         Toast.fire({
           icon: "error",

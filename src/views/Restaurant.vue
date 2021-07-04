@@ -1,5 +1,6 @@
 <template>
-  <div class="container py-5">
+  <Spinner v-if="isLoading" />
+  <div v-else class="container py-5">
     <h1>餐廳描述頁</h1>
     <!-- 餐廳資訊頁 RestaurantDetail -->
     <RestaurantDetail :initial-restaurant="restaurant" />
@@ -22,6 +23,7 @@
 import RestaurantDetail from "./../components/RestaurantDetail";
 import RestaurantComments from "./../components/RestaurantComments";
 import CreateComment from "./../components/CreateComment";
+import Spinner from "./../components/Spinner.vue";
 import restaurantsAPI from "./../apis/restaurants";
 import { Toast } from "./../utils/helpers";
 import { mapState } from "vuex";
@@ -32,6 +34,7 @@ export default {
     RestaurantDetail,
     RestaurantComments,
     CreateComment,
+    Spinner,
   },
   data() {
     return {
@@ -48,6 +51,7 @@ export default {
         isLiked: false,
       },
       restaurantComments: [],
+      isLoading: true,
     };
   },
   computed: {
@@ -67,6 +71,7 @@ export default {
     // 顯示餐廳資料
     async fetchRestaurant(restaurantId) {
       try {
+        this.isLoading = true;
         // 透過 restaurantsAPI 取得餐廳資訊
         const { data } = await restaurantsAPI.getRestaurant({ restaurantId });
         const { restaurant, isFavorited, isLiked } = data;
@@ -96,7 +101,9 @@ export default {
           isLiked,
         };
         this.restaurantComments = Comments;
+        this.isLoading = false;
       } catch (error) {
+        this.isLoading = false;
         Toast.fire({
           icon: "error",
           title: "無法取得餐廳資料，請稍後再試",

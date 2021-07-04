@@ -24,7 +24,9 @@
         </div>
       </div>
     </form>
-    <table class="table">
+
+    <Spinner v-if="isLoading" />
+    <table v-else class="table">
       <thead class="thead-dark">
         <tr>
           <th scope="col" width="60">#</th>
@@ -90,6 +92,7 @@
 
 <script>
 import AdminNav from "@/components/AdminNav";
+import Spinner from "./../components/Spinner";
 import { v4 as uuidv4 } from "uuid";
 
 //  2. 定義暫時使用的資料
@@ -126,12 +129,14 @@ const dummyData = {
 export default {
   components: {
     AdminNav,
+    Spinner,
   },
   // 3. 定義 Vue 中使用的 data 資料
   data() {
     return {
       categories: [],
       newCategoryName: "",
+      isLoading: true,
     };
   },
   // 5. 調用 `fetchCategories` 方法
@@ -150,6 +155,7 @@ export default {
         isEditing: false,
         nameCached: "", // 暫存類別名稱
       }));
+      this.isLoading = false;
     },
     createCategory() {
       // 先不按教材帶入參數name，會有問題

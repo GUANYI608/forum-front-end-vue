@@ -3,7 +3,8 @@
     <!-- AdminNav Component -->
     <AdminNav />
 
-    <table class="table">
+    <Spinner v-if="isLoading" />
+    <table v-else class="table">
       <thead class="thead-dark">
         <tr>
           <th scope="col">#</th>
@@ -39,6 +40,7 @@
 
 <script>
 import AdminNav from "./../components/AdminNav";
+import Spinner from "./../components/Spinner";
 
 // 透過路由為 /admin/users 的 API 取得 => 拿不到先從github複製
 const dummyData = {
@@ -400,11 +402,13 @@ const dummyUser = {
 export default {
   components: {
     AdminNav,
+    Spinner,
   },
   data() {
     return {
       users: [],
       currentUser: dummyUser.currentUser,
+      isLoading: true,
     };
   },
   created() {
@@ -413,6 +417,7 @@ export default {
   methods: {
     fetchUser() {
       this.users = dummyData.users;
+      this.isLoading = false;
     },
     // 修改使用者角色
     toggleUserRole({ userId, isAdmin }) {

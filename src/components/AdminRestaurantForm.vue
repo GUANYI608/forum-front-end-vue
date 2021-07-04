@@ -1,6 +1,7 @@
 <template>
+  <Spinner v-if="isLoading" />
   <!-- 餐廳類別資料未載入完成前，不渲染表單元件 -->
-  <form v-show="!isLoading" @submit.stop.prevent="handleSubmit">
+  <form v-else @submit.stop.prevent="handleSubmit">
     <div class="form-group">
       <label for="name">Name</label>
       <input
@@ -108,8 +109,12 @@
 <script>
 import adminAPI from "./../apis/admin";
 import { Toast } from "./../utils/helpers";
+import Spinner from "./../components/Spinner";
 
 export default {
+  components: {
+    Spinner,
+  },
   props: {
     // 拿到 AdminRestaurantEdit 傳入的資料
     initialRestaurant: {
