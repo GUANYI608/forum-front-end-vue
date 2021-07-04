@@ -93,6 +93,9 @@ export default {
         // 將 token 存放在localStorage 內
         localStorage.setItem("token", data.token);
 
+        // 提交 store 裡的 mutation 事件
+        this.$store.commit("setCurrentUser", data.user);
+
         // 成功登入後轉址到餐廳首頁
         this.$router.push("/restaurants");
       } catch (error) {
