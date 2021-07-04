@@ -86,6 +86,15 @@ export default {
       restaurant: this.initialRestaurant,
     };
   },
+  // 需要在子元件 RestaurantDetail 使用 Vue 的 watch 屬性監控 initialRestaurant 的內容變動，若新的資料傳入，就把資料寫入元件
+  watch: {
+    initialRestaurant(newValue) {
+      this.restaurant = {
+        ...this.restaurant,
+        ...newValue,
+      };
+    },
+  },
   methods: {
     addFavorite() {
       this.restaurant = {
