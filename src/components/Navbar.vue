@@ -36,6 +36,7 @@
           <button
             type="button"
             class="btn btn-sm btn-outline-success my-2 my-sm-0"
+            @click="logout"
           >
             登出
           </button>
@@ -51,6 +52,14 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState(["currentUser", "isAuthenticated"]),
+  },
+  methods: {
+    logout() {
+      // 呼叫 mutatioms 的函式移除 token
+      this.$store.commit("revokeAuthentication");
+      // 轉址到登入頁面
+      this.$router.push("/signin");
+    },
   },
 };
 </script>
